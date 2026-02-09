@@ -1,0 +1,29 @@
+services:
+  amanda-site:
+    image: witrocha/amanda-site-next:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_WHATSAPP_NUMBER: ${NEXT_PUBLIC_WHATSAPP_NUMBER}
+        NEXT_PUBLIC_RAIZ_ROUTE: ${NEXT_PUBLIC_RAIZ_ROUTE}
+    container_name: amanda-site-next
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_WHATSAPP_NUMBER=${NEXT_PUBLIC_WHATSAPP_NUMBER}
+      - NEXT_PUBLIC_RAIZ_ROUTE=${NEXT_PUBLIC_RAIZ_ROUTE}
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - amanda-network
+
+networks:
+  amanda-network:
+    driver: bridge

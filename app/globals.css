@@ -1,26 +1,274 @@
 @import "tailwindcss";
 
+/* ===================================
+   DESIGN TOKENS - DRA. AMANDA SOUSA
+   Premium Legal / Gold Theme
+   =================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* === Cores Base (Extraídas da Logo) === */
+
+  /* Azul Royal - Autoridade e Confiança */
+  --royal-900: #0d1442;
+  --royal-800: #1a237e;
+  --royal-700: #283593;
+  --royal-600: #303f9f;
+
+  /* Dourado - Premium e Elegância */
+  --gold-300: #f0d78c;
+  --gold-400: #d4af37;
+  --gold-500: #c9a227;
+  --gold-600: #b8860b;
+
+  /* Nude/Bege - Acolhimento */
+  --nude-50: #faf8f5;
+  --nude-100: #f5f0e8;
+  --nude-200: #ebe0d0;
+  --nude-300: #dfd0bc;
+
+  /* Neutros */
+  --black: #0a0a0a;
+  --black-soft: #1a1a1a;
+  --white: #ffffff;
+  --gray-100: #f5f5f5;
+  --gray-200: #e5e5e5;
+  --gray-600: #525252;
+  --gray-800: #262626;
+
+  /* === Tema Padrão (OAB - Azul Royal) === */
+  --background: var(--royal-800);
+  --background-secondary: var(--royal-900);
+  --foreground: var(--white);
+  --foreground-muted: rgba(255, 255, 255, 0.7);
+  --accent: var(--gold-400);
+  --accent-hover: var(--gold-500);
+
+  /* === Tipografia === */
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* Escala tipográfica Mobile-First */
+  --text-xs: 0.75rem;
+  /* 12px */
+  --text-sm: 0.875rem;
+  /* 14px */
+  --text-base: 1rem;
+  /* 16px */
+  --text-lg: 1.125rem;
+  /* 18px */
+  --text-xl: 1.25rem;
+  /* 20px */
+  --text-2xl: 1.5rem;
+  /* 24px */
+  --text-3xl: 1.875rem;
+  /* 30px */
+  --text-4xl: 2.25rem;
+  /* 36px */
+  --text-5xl: 3rem;
+  /* 48px */
+
+  /* === Espaçamento === */
+  --space-1: 0.25rem;
+  /* 4px */
+  --space-2: 0.5rem;
+  /* 8px */
+  --space-3: 0.75rem;
+  /* 12px */
+  --space-4: 1rem;
+  /* 16px */
+  --space-5: 1.25rem;
+  /* 20px */
+  --space-6: 1.5rem;
+  /* 24px */
+  --space-8: 2rem;
+  /* 32px */
+  --space-10: 2.5rem;
+  /* 40px */
+  --space-12: 3rem;
+  /* 48px */
+  --space-16: 4rem;
+  /* 64px */
+  --space-20: 5rem;
+  /* 80px */
+
+  /* === Bordas === */
+  --radius-sm: 0.375rem;
+  /* 6px */
+  --radius-md: 0.5rem;
+  /* 8px */
+  --radius-lg: 0.75rem;
+  /* 12px */
+  --radius-xl: 1rem;
+  /* 16px */
+  --radius-full: 9999px;
+
+  /* === Sombras === */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-gold: 0 4px 14px 0 rgba(212, 175, 55, 0.3);
+
+  /* === Transições === */
+  --transition-fast: 150ms ease;
+  --transition-normal: 300ms ease;
+  --transition-slow: 500ms ease;
 }
 
+/* === Tema PREV (Bege/Nude) === */
+[data-theme="prev"] {
+  --background: var(--nude-50);
+  --background-secondary: var(--nude-100);
+  --foreground: var(--black);
+  --foreground-muted: var(--gray-600);
+  --accent: var(--royal-800);
+  --accent-hover: var(--royal-700);
+}
+
+/* === Tailwind Theme Integration === */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-accent: var(--accent);
+
+  --color-royal-900: var(--royal-900);
+  --color-royal-800: var(--royal-800);
+  --color-royal-700: var(--royal-700);
+  --color-royal-600: var(--royal-600);
+
+  --color-gold-300: var(--gold-300);
+  --color-gold-400: var(--gold-400);
+  --color-gold-500: var(--gold-500);
+  --color-gold-600: var(--gold-600);
+
+  --color-nude-50: var(--nude-50);
+  --color-nude-100: var(--nude-100);
+  --color-nude-200: var(--nude-200);
+  --color-nude-300: var(--nude-300);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* === Base Styles === */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* === Typography === */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* === Utility Classes === */
+.text-gradient-gold {
+  background: linear-gradient(135deg, var(--gold-300) 0%, var(--gold-500) 50%, var(--gold-600) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bg-gradient-royal {
+  background: linear-gradient(180deg, var(--royal-800) 0%, var(--royal-900) 100%);
+}
+
+.border-gold {
+  border-color: var(--gold-400);
+}
+
+.shadow-gold {
+  box-shadow: var(--shadow-gold);
+}
+
+/* === Focus States (Acessibilidade) === */
+:focus-visible {
+  outline: 2px solid var(--gold-400);
+  outline-offset: 2px;
+}
+
+/* === Selection === */
+::selection {
+  background: var(--gold-400);
+  color: var(--black);
+}
+
+/* === Scrollbar (Webkit) === */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--royal-900);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gold-500);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-400);
+}
+
+/* === Animações Customizadas === */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 5px var(--gold-400), 0 0 10px var(--gold-400);
+  }
+
+  50% {
+    box-shadow: 0 0 20px var(--gold-400), 0 0 30px var(--gold-400);
+  }
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
 }

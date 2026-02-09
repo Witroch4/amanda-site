@@ -1,0 +1,63 @@
+# -----------------------------------------------------------------------------
+# Amanda Site Next - Docker Swarm Deploy
+# -----------------------------------------------------------------------------
+
+services:
+  amanda_site:
+    image: witrocha/amanda-site-next:latest
+    networks:
+      - minha_rede
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_WHATSAPP_NUMBER=558592091821
+      - NEXT_PUBLIC_RAIZ_ROUTE=oab
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      resources:
+        limits:
+          cpus: "1"
+          memory: 2048M
+      labels:
+        - "traefik.enable=true"
+        # Sintaxe v3: Suporte a domínio com e sem WWW
+        - 'traefik.http.routers.amanda_site.rule=Host(`amandasousaprev.adv.br`) || Host(`www.amandasousaprev.adv.br`)'
+        - "traefik.http.routers.amanda_site.entrypoints=websecure"
+        - "traefik.http.routers.amanda_site.tls.certresolver=letsencryptresolver"
+        - "traefik.http.routers.amanda_site.priority=1"
+        
+        # FIX DE PORTA: Crucial para o Traefik v3 no Swarm
+        - "traefik.http.services.amanda_site.loadbalancer.server.port=3000"
+        - "traefik.http.services.amanda_site.loadbalancer.passHostHeader=true"
+        
+        # MIDDLEWARE: Escopo @swarm para o provedor nativo
+        - "traefik.http.routers.amanda_site.middlewares=amanda_site_secure@swarm"
+        
+        # Cabeçalhos de Segurança
+        - "traefik.http.middlewares.amanda_site_secure.headers.stsSeconds=31536000"
+        - "traefik.http.middlewares.amanda_site_secure.headers.stsIncludeSubdomains=true"
+        - "traefik.http.middlewares.amanda_site_secure.headers.stsPreload=true"
+        - "traefik.http.middlewares.amanda_site_secure.headers.contentTypeNosniff=true"
+        - "traefik.http.middlewares.amanda_site_secure.headers.browserXssFilter=true"
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+
+# -----------------------------------------------------------------------------
+# Infraestrutura
+# -----------------------------------------------------------------------------
+networks:
+  minha_rede:
+    external: true
+    name: minha_rede
