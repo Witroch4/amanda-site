@@ -109,7 +109,6 @@ export default function OABPage() {
                 subheadline="Especialista em Mandado de Segurança e Recursos Administrativos. Recupere sua vaga com quem entende as falhas dos editais."
                 imageSrc="/amanda-cintura-pracima.jpg"
                 imageAlt="Dra. Amanda Sousa - Especialista em Recursos de Concursos"
-                secondaryImageSrc="/amanda-rosto.jpg"
                 ctaText="Quero Reverter Minha Reprovação"
             />
 

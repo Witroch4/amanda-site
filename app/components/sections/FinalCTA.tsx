@@ -1,5 +1,8 @@
+'use client';
+
 import { Button } from "@/app/components/ui/Button";
 import { getWhatsAppLink } from "@/app/lib/whatsapp";
+import { Aurora } from "@/app/components/ui/Aurora";
 
 interface FinalCTAProps {
     theme: "oab" | "prev";
@@ -30,31 +33,47 @@ export function FinalCTA({ theme }: FinalCTAProps) {
     const content = ctaContent[theme];
     const whatsappLink = getWhatsAppLink(theme);
 
+    // Cores Aurora por tema
+    const auroraColors = theme === "oab"
+        ? ["#1a237e", "#d4af37", "#1a237e"] // Royal → Gold → Royal
+        : ["#5227FF", "#7cff67", "#5227FF"]; // Purple → Green → Purple
+
     return (
-        <section className="py-16 md:py-24 bg-gradient-to-b from-gold-500 to-gold-600">
-            <div className="container mx-auto px-4">
+        <section className="relative py-16 md:py-24 overflow-hidden bg-royal-900">
+            {/* Aurora Background */}
+            <div className="absolute inset-0">
+                <Aurora
+                    colorStops={auroraColors}
+                    blend={0.6}
+                    amplitude={1.2}
+                    speed={0.8}
+                />
+            </div>
+
+            {/* Content Overlay */}
+            <div className="relative z-10 container mx-auto px-4">
                 <div className="max-w-3xl mx-auto text-center">
                     <h2
-                        className="text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-4"
+                        className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 drop-shadow-lg"
                         style={{ fontFamily: "var(--font-playfair)" }}
                     >
                         {content.title}
                     </h2>
-                    <p className="text-lg md:text-xl text-black/80 mb-8">
+                    <p className="text-lg md:text-xl text-white/90 mb-8 drop-shadow">
                         {content.subtitle}
                     </p>
 
                     <Button
                         href={whatsappLink}
                         external
-                        variant="royal"
+                        variant={theme === "oab" ? "gold" : "gold"}
                         size="lg"
                         icon={<WhatsAppIcon />}
                     >
                         {content.cta}
                     </Button>
 
-                    <p className="mt-6 text-sm text-black/60">
+                    <p className="mt-6 text-sm text-white/70">
                         Resposta rápida • Atendimento em todo Brasil • Consulta inicial gratuita
                     </p>
                 </div>

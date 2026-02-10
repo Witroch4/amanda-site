@@ -1,5 +1,8 @@
+'use client';
+
 import Image from "next/image";
 import { Card } from "@/app/components/ui/Card";
+import { BlurText } from "@/app/components/ui/BlurText";
 
 interface TestimonialItem {
     name: string;
@@ -94,9 +97,14 @@ export function TestimonialsSection({
                                                 <StarIcon key={i} />
                                             ))}
                                         </div>
-                                        <p className={`text-sm leading-relaxed mb-3 ${mutedTextClass}`}>
-                                            &ldquo;{item.content}&rdquo;
-                                        </p>
+                                        <BlurText
+                                            text={`"${item.content}"`}
+                                            className={`text-sm leading-relaxed mb-3 ${mutedTextClass}`}
+                                            animateBy="words"
+                                            direction="bottom"
+                                            delay={50}
+                                            stepDuration={0.3}
+                                        />
                                         <p className={`font-semibold text-sm ${textClass}`}>
                                             {item.name}
                                         </p>
@@ -109,9 +117,14 @@ export function TestimonialsSection({
                                 /* Without image (for /oab with text cards) */
                                 <div className={textClass}>
                                     <QuoteIcon />
-                                    <p className={`text-sm leading-relaxed my-4 ${mutedTextClass}`}>
-                                        &ldquo;{item.content}&rdquo;
-                                    </p>
+                                    <BlurText
+                                        text={`"${item.content}"`}
+                                        className={`text-sm leading-relaxed my-4 ${mutedTextClass}`}
+                                        animateBy="words"
+                                        direction="bottom"
+                                        delay={50}
+                                        stepDuration={0.3}
+                                    />
                                     <div className="flex items-center gap-3">
                                         <div className="w-10 h-10 rounded-full bg-gold-400 flex items-center justify-center text-black font-bold">
                                             {item.name.charAt(0)}

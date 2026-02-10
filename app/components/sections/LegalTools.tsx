@@ -1,3 +1,9 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { MagicBentoGrid, MagicBentoCard } from "@/app/components/ui/MagicBento";
+import StarBorder from "@/app/components/ui/StarBorder";
+
 interface LegalTool {
     name: string;
     when: string;
@@ -14,7 +20,7 @@ const defaultTools: LegalTool[] = [
     },
     {
         name: "Ação Ordinária",
-        when: "Quando o prazo de 120 dias expirou ou exige perícia",
+        when: "Quando o prazo de 120 dias expirou",
         differential: "Ideal para casos complexos que precisam de produção de provas detalhadas",
         icon: "document",
     },
@@ -44,7 +50,47 @@ const iconComponents = {
     ),
 };
 
+function ToolCardContent({ tool }: { tool: LegalTool }) {
+    const IconComponent = iconComponents[tool.icon];
+    return (
+        <div className="flex flex-col items-center text-center p-6">
+            <div className="w-16 h-16 rounded-full bg-gold-400 flex items-center justify-center text-royal-900 mb-4">
+                <IconComponent />
+            </div>
+            <h3
+                className="text-xl font-bold text-gold-400 mb-3"
+                style={{ fontFamily: "var(--font-playfair)" }}
+            >
+                {tool.name}
+            </h3>
+            <div className="space-y-3 text-left w-full">
+                <div className="bg-royal-900/50 rounded-lg p-3">
+                    <p className="text-xs text-gold-400 font-semibold uppercase tracking-wide mb-1">
+                        Quando Usar
+                    </p>
+                    <p className="text-sm text-white/80">{tool.when}</p>
+                </div>
+                <div className="bg-royal-900/50 rounded-lg p-3">
+                    <p className="text-xs text-gold-400 font-semibold uppercase tracking-wide mb-1">
+                        Diferencial
+                    </p>
+                    <p className="text-sm text-white/80">{tool.differential}</p>
+                </div>
+            </div>
+        </div>
+    );
+}
+
 export function LegalToolsSection() {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
+
     return (
         <section className="py-16 md:py-24 bg-royal-900">
             <div className="container mx-auto px-4">
@@ -61,44 +107,55 @@ export function LegalToolsSection() {
                     </p>
                 </div>
 
-                {/* Tools Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                    {defaultTools.map((tool, index) => {
-                        const IconComponent = iconComponents[tool.icon];
-                        return (
-                            <div
+                {/* Desktop: MagicBento */}
+                {!isMobile && (
+                    <MagicBentoGrid
+                        enableSpotlight
+                        enableBorderGlow
+                        enableStars
+                        enableTilt={false}
+                        enableMagnetism={false}
+                        clickEffect
+                        spotlightRadius={400}
+                        particleCount={12}
+                        glowColor="212, 175, 55"
+                        disableAnimations={false}
+                    >
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                            {defaultTools.map((tool, index) => (
+                                <MagicBentoCard
+                                    key={index}
+                                    enableStars
+                                    enableBorderGlow
+                                    enableTilt={false}
+                                    clickEffect
+                                    enableMagnetism={false}
+                                    particleCount={12}
+                                    glowColor="212, 175, 55"
+                                >
+                                    <ToolCardContent tool={tool} />
+                                </MagicBentoCard>
+                            ))}
+                        </div>
+                    </MagicBentoGrid>
+                )}
+
+                {/* Mobile: StarBorder */}
+                {isMobile && (
+                    <div className="grid grid-cols-1 gap-6 max-w-6xl mx-auto">
+                        {defaultTools.map((tool, index) => (
+                            <StarBorder
                                 key={index}
-                                className="bg-royal-800 rounded-xl p-6 border border-gold-400/30 hover:border-gold-400 transition-all hover:shadow-gold"
+                                className="w-full"
+                                color="rgba(212, 175, 55, 0.8)"
+                                speed="5s"
+                                thickness={5}
                             >
-                                <div className="flex flex-col items-center text-center">
-                                    <div className="w-16 h-16 rounded-full bg-gold-400 flex items-center justify-center text-royal-900 mb-4">
-                                        <IconComponent />
-                                    </div>
-                                    <h3
-                                        className="text-xl font-bold text-gold-400 mb-3"
-                                        style={{ fontFamily: "var(--font-playfair)" }}
-                                    >
-                                        {tool.name}
-                                    </h3>
-                                    <div className="space-y-3 text-left w-full">
-                                        <div className="bg-royal-900/50 rounded-lg p-3">
-                                            <p className="text-xs text-gold-400 font-semibold uppercase tracking-wide mb-1">
-                                                Quando Usar
-                                            </p>
-                                            <p className="text-sm text-white/80">{tool.when}</p>
-                                        </div>
-                                        <div className="bg-royal-900/50 rounded-lg p-3">
-                                            <p className="text-xs text-gold-400 font-semibold uppercase tracking-wide mb-1">
-                                                Diferencial
-                                            </p>
-                                            <p className="text-sm text-white/80">{tool.differential}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
+                                <ToolCardContent tool={tool} />
+                            </StarBorder>
+                        ))}
+                    </div>
+                )}
             </div>
         </section>
     );

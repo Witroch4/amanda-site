@@ -32,8 +32,8 @@ const urgencyContent = {
         cta: "Quero Reverter Minha Reprovação",
         stats: [
             { value: 120, label: "dias de prazo", suffix: "" },
-            { value: 500, label: "casos analisados", suffix: "+" },
-            { value: 24, label: "horas para resposta", suffix: "h" },
+            { value: 15000, label: "casos analisados", suffix: "+" },
+            { value: 24, label: "Atendimento", suffix: "h" },
         ],
     },
     prev: {
@@ -42,9 +42,10 @@ const urgencyContent = {
         description: "Benefícios negados podem ser revisados, mas o tempo é crucial. Cada mês que passa pode significar parcelas perdidas. Entre em contato agora para uma análise gratuita do seu caso.",
         cta: "Falar com a Dra. Amanda Agora",
         stats: [
-            { value: 5, label: "anos de atuação", suffix: "+" },
-            { value: 300, label: "benefícios conquistados", suffix: "+" },
-            { value: 24, label: "horas para resposta", suffix: "h" },
+            { value: 6, label: "anos de atuação", suffix: "+" },
+            { value: 3000, label: "benefícios conquistados", suffix: "+" },
+            { value: 15, label: "em valores conquistados", prefix: "R$", suffix: "mi+" },
+            { value: 24, label: "Atendimento", suffix: "h" },
         ],
     },
 };
@@ -196,16 +197,17 @@ export function UrgencySection({ theme }: UrgencySectionProps) {
                             </div>
 
                             {/* Animated Stats */}
-                            <div className="mt-10 grid grid-cols-3 gap-4 max-w-2xl mx-auto">
+                            <div className={`mt-10 grid gap-4 max-w-3xl mx-auto ${content.stats.length > 3 ? 'grid-cols-2 md:grid-cols-4' : 'grid-cols-3'}`}>
                                 {content.stats.map((stat, index) => (
                                     <div
                                         key={index}
                                         className="text-center p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300 hover:scale-105 group"
                                     >
-                                        <p className="text-3xl md:text-4xl lg:text-5xl font-bold text-white group-hover:text-gold-400 transition-colors">
+                                        <p className="text-2xl md:text-3xl lg:text-4xl font-bold text-white group-hover:text-gold-400 transition-colors">
                                             <AnimatedCounter
                                                 end={stat.value}
                                                 suffix={stat.suffix}
+                                                prefix={'prefix' in stat ? (stat as { prefix: string }).prefix : ''}
                                                 duration={2500}
                                             />
                                         </p>

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { AnimatedCounter } from "@/app/components/ui/AnimatedCounter";
+import { Antigravity } from "@/app/components/ui/Antigravity";
 
 interface InstagramSectionProps {
     theme?: "oab" | "prev";
@@ -45,9 +46,26 @@ export function InstagramSection({ theme = "oab" }: InstagramSectionProps) {
 
     return (
         <section className={`py-16 md:py-24 ${bgClass} relative overflow-hidden`}>
-            {/* Background decorations */}
-            <div className="absolute top-10 left-10 w-32 h-32 rounded-full bg-gradient-to-br from-pink-500/20 to-purple-500/20 blur-3xl animate-pulse" />
-            <div className="absolute bottom-10 right-10 w-40 h-40 rounded-full bg-gradient-to-br from-yellow-500/20 to-orange-500/20 blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+            {/* Antigravity Background Effect */}
+            <div className="absolute inset-0 opacity-40 pointer-events-none">
+                <Antigravity
+                    count={200}
+                    magnetRadius={8}
+                    ringRadius={6}
+                    waveSpeed={0.3}
+                    waveAmplitude={1.2}
+                    particleSize={1.2}
+                    lerpSpeed={0.04}
+                    color={theme === "oab" ? "#d4af37" : "#1a237e"}
+                    autoAnimate
+                    particleVariance={1.5}
+                    rotationSpeed={0.1}
+                    depthFactor={0.8}
+                    pulseSpeed={2}
+                    particleShape="capsule"
+                    fieldStrength={8}
+                />
+            </div>
 
             <div className="container mx-auto px-4 relative z-10">
                 <div className="max-w-4xl mx-auto">
@@ -139,7 +157,7 @@ export function InstagramSection({ theme = "oab" }: InstagramSectionProps) {
                                 Seguir no Instagram
                             </a>
                             <a
-                                href="https://www.instagram.com/direct/t/17850680894583246"
+                                href="https://ig.me/m/dra.amandasousadv"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white/10 border-2 border-gold-400 text-gold-400 font-semibold hover:bg-gold-400 hover:text-black transition-all hover:scale-105"

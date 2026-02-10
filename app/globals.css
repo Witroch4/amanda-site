@@ -147,6 +147,10 @@
 
   --font-display: var(--font-display);
   --font-body: var(--font-body);
+
+  /* StarBorder animations */
+  --animate-star-movement-bottom: star-movement-bottom linear infinite alternate;
+  --animate-star-movement-top: star-movement-top linear infinite alternate;
 }
 
 /* === Base Styles === */
@@ -271,4 +275,83 @@ h6 {
 
 .animate-glow {
   animation: glow 2s ease-in-out infinite;
+}
+
+/* === Animated Gradient Border === */
+@keyframes rotate-gradient {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animated-border-card {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.animated-border-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  z-index: 0;
+  background: conic-gradient(from 0deg,
+      var(--gold-400),
+      var(--royal-600),
+      #8b5cf6,
+      var(--royal-600),
+      var(--gold-400));
+  animation: rotate-gradient 4s linear infinite;
+  border-radius: inherit;
+}
+
+.animated-border-card::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  z-index: 1;
+  background: var(--royal-800);
+  border-radius: calc(var(--radius-xl) - 2px);
+}
+
+.animated-border-card>* {
+  position: relative;
+  z-index: 2;
+}
+
+/* === StarBorder Animations === */
+@keyframes star-movement-bottom {
+  0% {
+    transform: translate(0%, 0%);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(-100%, 0%);
+    opacity: 0;
+  }
+}
+
+@keyframes star-movement-top {
+  0% {
+    transform: translate(0%, 0%);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(100%, 0%);
+    opacity: 0;
+  }
+}
+
+.animate-star-movement-bottom {
+  animation: star-movement-bottom linear infinite alternate;
+}
+
+.animate-star-movement-top {
+  animation: star-movement-top linear infinite alternate;
 }

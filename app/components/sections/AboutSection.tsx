@@ -1,4 +1,7 @@
+'use client';
+
 import Image from "next/image";
+import { ShinyText } from "@/app/components/ui/ShinyText";
 
 interface AboutSectionProps {
     theme: "oab" | "prev";
@@ -18,7 +21,7 @@ export function AboutSection({ theme }: AboutSectionProps) {
         : "text-gray-600";
 
     return (
-        <section className={`py-16 md:py-24 ${bgClass}`}>
+        <section id="conheca" className={`py-16 md:py-24 ${bgClass}`}>
             <div className="container mx-auto px-4">
                 <div className="flex flex-col lg:flex-row items-center gap-12 max-w-6xl mx-auto">
                     {/* Image with floating badges */}
@@ -35,21 +38,21 @@ export function AboutSection({ theme }: AboutSectionProps) {
                                 />
                             </div>
 
-                            {/* Floating Badge - Top Right: +500 Processos */}
+                            {/* Floating Badge - Top Right: +10000 Processos */}
                             <div className={`absolute -top-3 -right-3 md:-right-6 z-10 ${theme === "oab"
-                                    ? "bg-royal-900/95 border-gold-400/30"
-                                    : "bg-white/95 border-royal-800/20"
+                                ? "bg-royal-900/95 border-gold-400/30"
+                                : "bg-white/95 border-royal-800/20"
                                 } backdrop-blur-sm rounded-xl px-4 py-3 shadow-xl border`}>
                                 <p className={`text-2xl md:text-3xl font-bold ${theme === "oab" ? "text-gold-400" : "text-royal-800"
-                                    }`}>+500</p>
+                                    }`}>+15000</p>
                                 <p className={`text-xs ${theme === "oab" ? "text-white/70" : "text-gray-600"
                                     }`}>Processos</p>
                             </div>
 
                             {/* Floating Badge - Bottom Left: +6 Anos */}
                             <div className={`absolute -bottom-3 -left-3 md:-left-6 z-10 ${theme === "oab"
-                                    ? "bg-gold-400"
-                                    : "bg-gold-400"
+                                ? "bg-gold-400"
+                                : "bg-gold-400"
                                 } rounded-xl px-4 py-3 shadow-xl`}>
                                 <p className="text-2xl md:text-3xl font-bold text-royal-900">+6</p>
                                 <p className="text-xs text-royal-800 font-medium">Anos de experiência</p>
@@ -63,7 +66,13 @@ export function AboutSection({ theme }: AboutSectionProps) {
                             className={`text-2xl md:text-3xl lg:text-4xl font-bold mb-6 ${textClass}`}
                             style={{ fontFamily: "var(--font-playfair)" }}
                         >
-                            Conheça a <span className="text-gold-400">Dra. Amanda Sousa</span>
+                            <ShinyText
+                                text="Conheça a Dra. Amanda Sousa"
+                                color={theme === "oab" ? "#d4af37" : "#1a237e"}
+                                shineColor="#ffffff"
+                                speed={3}
+                                delay={1}
+                            />
                         </h2>
 
                         <div className={`space-y-4 text-base md:text-lg leading-relaxed ${mutedTextClass}`}>
@@ -104,7 +113,7 @@ export function AboutSection({ theme }: AboutSectionProps) {
                                 <svg className="w-5 h-5 text-gold-400" fill="currentColor" viewBox="0 0 20 20">
                                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                                 </svg>
-                                <span className={`text-sm font-medium ${textClass}`}>+5 anos de atuação</span>
+                                <span className={`text-sm font-medium ${textClass}`}>+6 anos de atuação</span>
                             </div>
                         </div>
                     </div>

@@ -9,7 +9,6 @@ interface HeroProps {
     ctaText?: string;
     imageSrc: string;
     imageAlt: string;
-    secondaryImageSrc?: string;
 }
 
 function WhatsAppIcon() {
@@ -32,11 +31,21 @@ function HeroOAB({
         <section className="relative min-h-screen overflow-hidden">
             {/* Background Image with Overlay */}
             <div className="absolute inset-0">
+                {/* Mobile image (vertical) - hidden on md and up */}
+                <Image
+                    src="/hero-OAB-smartfone.png"
+                    alt="Escritório de Advocacia"
+                    fill
+                    className="object-cover object-center md:hidden"
+                    priority
+                    quality={90}
+                />
+                {/* Desktop image (horizontal) - hidden on mobile */}
                 <Image
                     src="/hero-OAB.jpg"
                     alt="Escritório de Advocacia"
                     fill
-                    className="object-cover object-right"
+                    className="object-cover object-right hidden md:block"
                     priority
                     quality={90}
                 />
@@ -154,9 +163,22 @@ function HeroOAB({
                 </div>
             </div>
 
-            {/* Scroll Indicator */}
+            {/* Scroll Indicator - Responsive: finger for mobile, mouse for desktop */}
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-                <div className="w-8 h-12 rounded-full border-2 border-white/30 flex items-start justify-center p-2">
+                {/* Mobile: Finger swipe down */}
+                <div className="md:hidden flex flex-col items-center gap-1">
+                    <svg className="w-6 h-6 text-white/50" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C9.9 2 8.2 3.7 8.2 5.8v4.4c-.3-.1-.6-.2-.9-.2-1.8 0-3.3 1.5-3.3 3.3 0 .9.4 1.8 1 2.4l4.2 4.2c.6.6 1.4.9 2.2.9h5.4c1.2 0 2.3-.7 2.8-1.7l2.1-4.2c.3-.5.4-1.1.4-1.7v-2.5c0-1.8-1.5-3.3-3.3-3.3-.3 0-.6.1-.9.2V5.8C17.8 3.7 16.1 2 14 2h-2zm2 2c.9 0 1.6.7 1.6 1.8v5h-1.2V5.8c0-.3-.1-.5-.2-.7.6.1 1 .6 1 1.2v4.5h1.2V8.6c0-.9.7-1.6 1.6-1.6.9 0 1.6.7 1.6 1.6v2.5c0 .3-.1.6-.2.9l-2.1 4.2c-.2.4-.7.7-1.2.7h-5.4c-.4 0-.7-.1-1-.4l-4.2-4.2c-.3-.3-.4-.7-.4-1.1 0-.9.7-1.6 1.6-1.6.4 0 .8.2 1.1.5l.8.8V5.8C10.6 4.7 11.3 4 12.2 4H14z" />
+                    </svg>
+                    <div className="flex flex-col items-center">
+                        <div className="w-0.5 h-2 bg-gold-400 rounded-full animate-pulse" />
+                        <svg className="w-3 h-3 text-gold-400 animate-pulse" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7 10l5 5 5-5z" />
+                        </svg>
+                    </div>
+                </div>
+                {/* Desktop: Mouse wheel */}
+                <div className="hidden md:flex w-8 h-12 rounded-full border-2 border-white/30 items-start justify-center p-2">
                     <div className="w-1 h-3 rounded-full bg-gold-400 animate-pulse" />
                 </div>
             </div>
@@ -171,7 +193,6 @@ function HeroPrev({
     ctaText = "Analisar Meu Caso Gratuitamente",
     imageSrc,
     imageAlt,
-    secondaryImageSrc,
 }: Omit<HeroProps, "theme">) {
     const whatsappLink = getWhatsAppLink("prev");
 
@@ -283,25 +304,12 @@ function HeroPrev({
                             </div>
                         </div>
 
-                        {secondaryImageSrc && (
-                            <div className="absolute -bottom-6 -left-6 lg:-left-12 z-20 hidden md:block">
-                                <div className="relative w-32 h-40 lg:w-40 lg:h-52 rounded-xl overflow-hidden shadow-xl border-2 border-royal-800">
-                                    <Image
-                                        src={secondaryImageSrc}
-                                        alt="Dra. Amanda Sousa"
-                                        fill
-                                        className="object-cover object-top"
-                                        sizes="160px"
-                                    />
-                                </div>
-                            </div>
-                        )}
 
                         <div className="absolute -top-4 -right-4 w-24 h-24 rounded-full blur-2xl bg-royal-800/20" />
                         <div className="absolute -bottom-8 right-1/4 w-32 h-32 rounded-full blur-3xl bg-gold-400/20" />
 
                         <div className="absolute -right-4 top-1/4 z-20 hidden lg:block bg-white/90 backdrop-blur-sm rounded-xl p-4 shadow-xl border border-royal-800/20">
-                            <p className="text-3xl font-bold text-royal-800">+500</p>
+                            <p className="text-3xl font-bold text-royal-800">+15000</p>
                             <p className="text-xs text-gray-600">Clientes atendidos</p>
                         </div>
                     </div>

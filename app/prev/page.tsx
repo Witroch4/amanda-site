@@ -108,7 +108,6 @@ export default function PrevPage() {
                 subheadline="Muitas negativas acontecem porque o perito olha apenas o exame, e não a sua vida. Nós combatemos a injustiça contra portadores de HIV, doenças autoimunes e condições psiquiátricas."
                 imageSrc="/amanda-cintura-pracima.jpg"
                 imageAlt="Dra. Amanda Sousa - Especialista em Direito Previdenciário"
-                secondaryImageSrc="/amanda-rosto.jpg"
                 ctaText="Analisar Meu Caso Gratuitamente"
             />
 
